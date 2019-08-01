@@ -21,5 +21,124 @@
 			<version>1.5</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>2.3.1</version>
+		</dependency>
+
+
+
 	</dependencies>
+	<properties>
+		<mainClass>br.com.lazaru.matrimonio.Main</mainClass>
+		<javafx.version>2.2</javafx.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+
+		<plugins>
+			<plugin>
+				<!-- copy all dependencies of your app to target folder -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<overWriteReleases>false</overWriteReleases>
+							<overWriteSnapshots>false</overWriteSnapshots>
+							<overWriteIfNewer>true</overWriteIfNewer>
+							<includeScope>runtime</includeScope>
+							<outputDirectory>${basedir}/dist/lib</outputDirectory>
+							<!--<outputDirectory>${project.build.directory}</outputDirectory>- 
+								<excludeScope>system</excludeScope> <excludeGroupIds>junit,org.mockito,org.hamcrest</excludeGroupIds> 
+								<outputDirectory>${project.build.directory}/classes</outputDirectory> -->
+						</configuration>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<source>${maven.compiler.source}</source>
+					<target>${maven.compiler.source}</target>
+					<useIncrementalCompilation>false</useIncrementalCompilation>
+					<fork>true</fork>
+					<release>12</release>
+					<!-- <compilerArgs> <arg>-bootclasspath</arg> <arg>${sun.boot.class.path}${path.separator}${java.home}/lib/jfxrt.jar</arg> 
+						</compilerArgs> -->
+					<executable>/usr/lib/jvm/java-12-openjdk-amd64/bin/javac</executable>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.0.2</version>
+				<configuration>
+					<outputDirectory>${basedir}/dist</outputDirectory>
+					<!--<descriptors> <descriptor>src/main/assembly/jar-with-dependencies.xml</descriptor> 
+						</descriptors> -->
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<!--<mainClass>${mainClass}</mainClass> -->
+							<classpathPrefix>lib/</classpathPrefix>
+						</manifest>
+						<manifestEntries>
+							<!-- <JavaFX-Application-Class>${mainClass}</JavaFX-Application-Class> -->
+							<Main-Class>${mainClass}</Main-Class>
+							<!-- <JavaFX-Version>${javafx.version}</JavaFX-Version> -->
+							<implementation-version>1.0</implementation-version>
+							<!-- <JavaFX-Class-Path> </JavaFX-Class-Path> -->
+							<!-- The artifactId (name) of the jfxrt.jar ... see dependency system 
+								scope <Class-Path>javafx-${javafx.version}.jar</Class-Path> -->
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<executable>java</executable>
+					<arguments>
+						<argument>-classpath</argument>
+						<classpath />
+						<argument>${mainClass}</argument>
+					</arguments>
+					<workingDirectory>${basedir}/dist</workingDirectory>
+				</configuration>
+			</plugin>
+
+
+		</plugins>
+	</build>
+
 </project>

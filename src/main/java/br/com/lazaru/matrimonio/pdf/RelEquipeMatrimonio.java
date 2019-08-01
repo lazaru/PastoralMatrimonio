@@ -17,11 +17,11 @@ import be.quodlibet.boxable.HorizontalAlignment;
 import be.quodlibet.boxable.Row;
 import be.quodlibet.boxable.VerticalAlignment;
 import be.quodlibet.boxable.line.LineStyle;
-import br.com.lazaru.matrimonio.bean.Equipe;
+import br.com.lazaru.matrimonio.bean.Casal;
 
 public class RelEquipeMatrimonio {
 
-	public static void gerarRelatorio(List<Equipe> equipe, File diretorio) throws Exception {
+	public static void gerarRelatorio(List<Casal> equipe, File diretorio) throws Exception {
 		String outputFileName;
 	
 		if ((diretorio==null)||(!diretorio.exists())) {
@@ -100,7 +100,7 @@ public class RelEquipeMatrimonio {
 		cell.setTopBorderStyle(new LineStyle(Color.BLACK, 1));
 		table.addHeaderRow(headerRow2);
 				
-		for (Equipe e : equipe) {			
+		for (Casal e : equipe) {			
 			Row<PDPage> row = table.createRow(20);
 			cell = row.createCell(30, e.getCasal());
 			cell.setFontSize(15);

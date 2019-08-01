@@ -22,12 +22,12 @@ import be.quodlibet.boxable.VerticalAlignment;
 import be.quodlibet.boxable.image.Image;
 import be.quodlibet.boxable.line.LineStyle;
 import br.com.lazaru.matrimonio.bean.Encontrista;
-import br.com.lazaru.matrimonio.bean.Equipe;
+import br.com.lazaru.matrimonio.bean.Casal;
 import br.com.lazaru.matrimonio.bean.ICasal;
 
 public class RelEtiquetaPasta {
 
-	public static void gerarEtiqueta(List<Encontrista> casais, File diretorio) throws Exception {
+	public static void gerarEtiqueta(List<Encontrista> casais, String periodo, File diretorio) throws Exception {
 		String outputFileName;
 
 		if ((diretorio == null) || (!diretorio.exists())) {
@@ -75,7 +75,7 @@ public class RelEtiquetaPasta {
 			StringBuilder sb = new StringBuilder();
 			sb.append("<p>").append(e.getHomem()).append("</p>")
 			  .append("<p>").append(e.getMulher()).append("</p>")
-			  .append("<p>").append("    Data de ").append(e.getDataEncontro()).append("</p>");			
+			  .append("<p>").append("    Data de ").append(periodo).append("</p>");			
 			    
 			Cell<PDPage> cell = row.createCell(100, sb.toString());
 			cell.setFontSize(30);

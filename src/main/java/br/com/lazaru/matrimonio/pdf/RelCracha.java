@@ -3,6 +3,7 @@ package br.com.lazaru.matrimonio.pdf;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -19,15 +20,23 @@ import be.quodlibet.boxable.Row;
 import be.quodlibet.boxable.VerticalAlignment;
 import be.quodlibet.boxable.image.Image;
 import be.quodlibet.boxable.line.LineStyle;
+import br.com.lazaru.matrimonio.bean.CasalBase;
+import br.com.lazaru.matrimonio.bean.Dados;
 import br.com.lazaru.matrimonio.bean.ICasal;
 
 public class RelCracha {
 
-	public static void gerarCrachaEquipe(List<ICasal> casais, File diretorio) throws Exception {
+	public static void gerarCrachaEquipe(Dados dados, File diretorio) throws Exception {
 		BufferedImage bi = ImageIO.read(new File("src/main/resources/br/com/lazaru/matrimonio/sagradafam2.png"));
 		Image img = new Image(bi);
 		String outputFileName;
 
+		List<CasalBase> casais = new ArrayList<CasalBase>();
+//		for(CasalBase cb:dados.getCasais()) {
+//			casais.addAll(dados.getCasais());
+//		}
+		casais.addAll(dados.getCasais());
+		casais.addAll(dados.getEncontristas());
 		if ((diretorio == null) || (!diretorio.exists())) {
 			outputFileName = "Cracha Equipe.pdf";
 		} else {
@@ -57,7 +66,7 @@ public class RelCracha {
 		// right margin AND provided space between tables
 		float tableWidth = 0.5f * (page.getMediaBox().getWidth() - (2 * leftMargin) - spaceBetweenTables);
 		System.out.println("------------------ nava pagina--------------");
-		for (ICasal e : casais) {
+		for (CasalBase e : casais) {
 			float alturaTable= (float) 157.23282; //valor retornado pelo metodo table1.getHeaderAndDataHeight();			
 			
 			System.out.println("cracha:"+startNewPageY);
@@ -100,11 +109,11 @@ public class RelCracha {
 				cell.setRightBorderStyle(new LineStyle(Color.white, 0));
 				// row = table2.createRow(20);
 				StringBuilder cellHtml = new StringBuilder("Paróquia N. Srª Das Dores Encontro de Noivos<br/><br/>");
-				if ((e.getMulher() != null) && (!e.getMulher().isEmpty())) {
-					cellHtml.append("<b>").append(e.getHomem()).append("</b><br/><br/>");
-					cellHtml.append("Da<br/><br/>").append("<b>").append(e.getMulher()).append("</b><br/><br/>");
+				if ((e.getHomem() != null) && (!e.getHomem().isEmpty())) {
+					cellHtml.append("<b>").append(e.getMulher()).append("</b><br/><br/>");
+					cellHtml.append("Do<br/><br/>").append("<b>").append(e.getHomem()).append("</b><br/><br/>");
 				} else {
-					cellHtml.append("<br/><br/><b>").append(e.getHomem()).append("</b><br/><br/><br/><br/>");
+					cellHtml.append("<br/><br/><b>").append(e.getMulher()).append("</b><br/><br/><br/><br/>");
 					//cellHtml.append("<br/><br/><br/>");
 				}
 

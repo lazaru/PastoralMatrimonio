@@ -1,6 +1,11 @@
 package br.com.lazaru.matrimonio.bean;
 
-public class Equipe implements ICasal, Comparable<Equipe> {
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlRootElement(name = "casal")
+@XmlType()
+public class Casal extends CasalBase implements Comparable<Casal> {
 
 	private String homem;
 	private String mulher;
@@ -22,20 +27,6 @@ public class Equipe implements ICasal, Comparable<Equipe> {
 
 	public void setMulher(String mulher) {
 		this.mulher = mulher;
-	}
-
-	public String getCasal() {
-		if ((getMulher() != null && !getMulher().isEmpty()) || (getHomem() != null && !getHomem().isEmpty())) {
-			if ((getMulher() == null || getMulher().isEmpty()) && (!getHomem().isEmpty())) {
-				return getHomem();
-			} else if ((getHomem() == null || getHomem().isEmpty()) && (!getMulher().isEmpty())) {
-				return getMulher();
-			} else {
-				return getHomem() + " e " + getMulher();
-			}
-		}else {
-			return "nada informado";
-		}
 	}
 
 	public String getTelefone() {
@@ -65,7 +56,7 @@ public class Equipe implements ICasal, Comparable<Equipe> {
 		this.ativo = ativo;
 	}
 
-	public int compareTo(Equipe e) {
+	public int compareTo(Casal e) {
 		if (getHomem() == null || e.getHomem() == null) {
 			return 0;
 		}

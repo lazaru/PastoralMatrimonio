@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dados>
+    <casais>
+        <casal>
+            <atividade>Palestra - Sacramentos</atividade>
+            <homem>Pe. Flávio</homem>
+            <telefone>3219-3316</telefone>
+        </casal>
+        <casal>
+            <atividade>Palestra - Sacramentos</atividade>
+            <homem>Mad. Tereza</homem>
+            <telefone>3219-3316</telefone>
+        </casal>
+        <casal>
+            <atividade>Palestra - Amor conjugal - Diálogo - Conhecimento de si e do outro</atividade>
+            <homem>Geraldo</homem>
+            <mulher>Lúcia</mulher>
+            <telefone>99976-4376</telefone>
+        </casal>
+        <casal>
+            <atividade>Palestra - Amor conjugal - Diálogo - Conhecimento de si e do outro</atividade>
+            <homem>Geraldo</homem>
+            <mulher>Lúcia</mulher>
+            <telefone>99976-4376</telefone>
+        </casal>
+        <casal>
+            <atividade>Palestra - Amor conjugal - Diálogo - Conhecimento de si e do outro</atividade>
+            <homem>Geraldo</homem>
+            <mulher>Lúcia</mulher>
+            <telefone>99976-4376</telefone>
+        </casal>
+        <casal>
+            <atividade>Palestra - Amor conjugal - Diálogo - Conhecimento de si e do outro</atividade>
+            <homem>Geraldo</homem>
+            <mulher>Lúcia</mulher>
+            <telefone>99976-4376</telefone>
+        </casal>
+        <casal>
+            <atividade>Palestra - Amor conjugal - Diálogo - Conhecimento de si e do outro</atividade>
+            <homem>Geraldo</homem>
+            <mulher>Lúcia</mulher>
+            <telefone>99976-4376</telefone>
+        </casal>
+        <casal>
+            <atividade>Palestra - Amor conjugal - Diálogo - Conhecimento de si e do outro</atividade>
+            <homem>Geraldo</homem>
+            <mulher>Lúcia</mulher>
+            <telefone>99976-4376</telefone>
+        </casal>
+        <casal>
+            <atividade>Palestra - Amor conjugal - Diálogo - Conhecimento de si e do outro</atividade>
+            <homem>Geraldo</homem>
+            <mulher>Lúcia</mulher>
+            <telefone>99976-4376</telefone>
+        </casal>
+        <casal>
+            <atividade>Palestra - Amor conjugal - Diálogo - Conhecimento de si e do outro</atividade>
+            <homem>Geraldo</homem>
+            <mulher>Lúcia</mulher>
+            <telefone>99976-4376</telefone>
+        </casal>
+        <casal>
+            <atividade>Palestra - Amor conjugal - Diálogo - Conhecimento de si e do outro</atividade>
+            <homem>Geraldo</homem>
+            <mulher>Lúcia</mulher>
+            <telefone>99976-4376</telefone>
+        </casal>
+    </casais>
+    <datasDePreparacao>03 a 04/08/2019</datasDePreparacao>
+    <encontristas>
+        <encontrista>
+            <homem>homen nome comprido 1234564560</homem>
+            <mulher>mulher 0</mulher>
+            <telefoneHomem>99976-4376</telefoneHomem>
+            <telefoneMulher>99976-4377</telefoneMulher>
+        </encontrista>
+        <encontrista>
+            <homem>homen nome comprido 1234564561</homem>
+            <mulher>mulher 1</mulher>
+            <telefoneHomem>99976-4376</telefoneHomem>
+            <telefoneMulher>99976-4377</telefoneMulher>
+        </encontrista>
+        <encontrista>
+            <homem>homen nome comprido 1234564562</homem>
+            <mulher>mulher 2</mulher>
+            <telefoneHomem>99976-4376</telefoneHomem>
+            <telefoneMulher>99976-4377</telefoneMulher>
+        </encontrista>
+        <encontrista>
+            <homem>homen nome comprido 1234564563</homem>
+            <mulher>mulher 3</mulher>
+            <telefoneHomem>99976-4376</telefoneHomem>
+            <telefoneMulher>99976-4377</telefoneMulher>
+        </encontrista>
+        <encontrista>
+            <homem>homen nome comprido 1234564564</homem>
+            <mulher>mulher 4</mulher>
+            <telefoneHomem>99976-4376</telefoneHomem>
+            <telefoneMulher>99976-4377</telefoneMulher>
+        </encontrista>
+        <encontrista>
+            <homem>homen nome comprido 1234564565</homem>
+            <mulher>mulher 5</mulher>
+            <telefoneHomem>99976-4376</telefoneHomem>
+            <telefoneMulher>99976-4377</telefoneMulher>
+        </encontrista>
+        <encontrista>
+            <homem>homen nome comprido 1234564566</homem>
+            <mulher>mulher 6</mulher>
+            <telefoneHomem>99976-4376</telefoneHomem>
+            <telefoneMulher>99976-4377</telefoneMulher>
+        </encontrista>
+        <encontrista>
+            <homem>homen nome comprido 1234564567</homem>
+            <mulher>mulher 7</mulher>
+            <telefoneHomem>99976-4376</telefoneHomem>
+            <telefoneMulher>99976-4377</telefoneMulher>
+        </encontrista>
+        <encontrista>
+            <homem>homen nome comprido 1234564568</homem>
+            <mulher>mulher 8</mulher>
+            <telefoneHomem>99976-4376</telefoneHomem>
+            <telefoneMulher>99976-4377</telefoneMulher>
+        </encontrista>
+    </encontristas>
+</dados>
