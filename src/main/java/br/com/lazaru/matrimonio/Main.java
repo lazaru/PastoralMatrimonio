@@ -1,15 +1,6 @@
 package br.com.lazaru.matrimonio;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
-import br.com.lazaru.matrimonio.bean.Encontrista;
-import br.com.lazaru.matrimonio.bean.Casal;
 import br.com.lazaru.matrimonio.bean.Dados;
-import br.com.lazaru.matrimonio.bean.ICasal;
 import br.com.lazaru.matrimonio.pdf.RelCracha;
 import br.com.lazaru.matrimonio.pdf.RelEquipeMatrimonio;
 import br.com.lazaru.matrimonio.pdf.RelEtiquetaPasta;

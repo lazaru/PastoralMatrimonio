@@ -3,6 +3,8 @@ package br.com.lazaru.matrimonio.pdf;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +26,14 @@ import br.com.lazaru.matrimonio.bean.CasalBase;
 import br.com.lazaru.matrimonio.bean.Dados;
 import br.com.lazaru.matrimonio.bean.ICasal;
 
-public class RelCrachabkp {
-
+public class RelCrachaMelhoria {
+	//https://github.com/vandeseer/easytable
+	//https://github.com/vandeseer/easytable/blob/master/src/test/java/org/vandeseer/integrationtest/ExcelLikeExampleTest.java
+		
 	public static void gerarCrachaEquipe(Dados dados, File diretorio) throws Exception {
-		BufferedImage bi = ImageIO.read(new File("src/main/resources/br/com/lazaru/matrimonio/sagradafam2.png"));
+		InputStream in = RelCrachaMelhoria.class.getResourceAsStream("sagradafam2.png");
+		
+		BufferedImage bi = ImageIO.read(in);
 		Image img = new Image(bi);
 		String outputFileName;
 
@@ -118,8 +124,8 @@ public class RelCrachabkp {
 				}
 
 				cellHtml.append("Equipe Sagrada Família<br/>");
-				cell = row.createCell(75, cellHtml.toString());
-				cell.setFontSize(15);
+				cell = row.createTableCell(75, cellHtml.toString(), document, page, startNewPageY, margin, margin);
+				cell.setFontSize(30);
 				cell.setAlign(HorizontalAlignment.CENTER);
 				cell.setValign(VerticalAlignment.MIDDLE);
 				table2.draw();	
