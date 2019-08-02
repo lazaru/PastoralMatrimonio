@@ -24,10 +24,8 @@ import br.com.lazaru.matrimonio.bean.CasalBase;
 import br.com.lazaru.matrimonio.bean.Dados;
 import br.com.lazaru.matrimonio.bean.ICasal;
 
-public class RelCracha {
-	//https://github.com/vandeseer/easytable
-	//https://github.com/vandeseer/easytable/blob/master/src/test/java/org/vandeseer/integrationtest/ExcelLikeExampleTest.java
-		
+public class RelCrachabkp {
+
 	public static void gerarCrachaEquipe(Dados dados, File diretorio) throws Exception {
 		BufferedImage bi = ImageIO.read(new File("src/main/resources/br/com/lazaru/matrimonio/sagradafam2.png"));
 		Image img = new Image(bi);
@@ -120,8 +118,8 @@ public class RelCracha {
 				}
 
 				cellHtml.append("Equipe Sagrada Família<br/>");
-				cell = row.createTableCell(75, cellHtml.toString(), document, page, startNewPageY, margin, margin);
-				cell.setFontSize(30);
+				cell = row.createCell(75, cellHtml.toString());
+				cell.setFontSize(15);
 				cell.setAlign(HorizontalAlignment.CENTER);
 				cell.setValign(VerticalAlignment.MIDDLE);
 				table2.draw();	

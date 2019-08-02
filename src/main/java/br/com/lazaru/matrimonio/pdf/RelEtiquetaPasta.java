@@ -53,9 +53,9 @@ public class RelEtiquetaPasta {
 		PDPageContentStream cos = new PDPageContentStream(document, page);
 
 		// Dummy Table
-		float margin = 50;
+		float margin = 15;
 		// starting y position is whole page height subtracted by top and bottom margin
-		float yStartNewPage = page.getMediaBox().getHeight() - margin;
+		float yStartNewPage = page.getMediaBox().getHeight() - margin+10;
 		// we want table across whole page width (subtracted by left and right margin
 		// ofcourse)
 		float tableWidth = page.getMediaBox().getWidth() - (2 * margin);
@@ -71,7 +71,7 @@ public class RelEtiquetaPasta {
 		
 
 		for(Encontrista e : casais) {
-			Row<PDPage> row = table.createRow(50);
+			Row<PDPage> row = table.createRow(30);
 			StringBuilder sb = new StringBuilder();
 			sb.append("<p>").append(e.getHomem()).append("</p>")
 			  .append("<p>").append(e.getMulher()).append("</p>")
@@ -79,8 +79,11 @@ public class RelEtiquetaPasta {
 			    
 			Cell<PDPage> cell = row.createCell(100, sb.toString());
 			cell.setFontSize(30);
+			cell.setLineSpacing(0.6f);
 			cell.setAlign(HorizontalAlignment.LEFT);
 			cell.setValign(VerticalAlignment.MIDDLE);
+			cell.setLeftBorderStyle(new LineStyle(Color.white, 0));
+			cell.setRightBorderStyle(new LineStyle(Color.white, 0));
 			// border style
 			cell.setTopBorderStyle(new LineStyle(Color.BLACK, 1));			
 		}

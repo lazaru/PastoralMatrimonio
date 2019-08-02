@@ -47,7 +47,7 @@ public class RelEquipeMatrimonio {
 		PDPageContentStream cos = new PDPageContentStream(document, page);
 
 		// Dummy Table
-		float margin = 50;
+		float margin = 15;
 		// starting y position is whole page height subtracted by top and bottom margin
 		float yStartNewPage = page.getMediaBox().getHeight() - margin;
 		// we want table across whole page width (subtracted by left and right margin
@@ -55,7 +55,7 @@ public class RelEquipeMatrimonio {
 		float tableWidth = page.getMediaBox().getWidth() - (2 * margin);
 
 		boolean drawContent = true;
-		float bottomMargin = 70;
+		float bottomMargin = 10;
 		// y position is your coordinate of top left corner of the table
 		float yPosition = page.getMediaBox().getHeight() - margin;//550;
 

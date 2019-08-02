@@ -79,10 +79,7 @@ public class Main {
 //		dados.setDatasPreparacao("03 a 04/08/2019");
 //		dados.setEncontristas(casais);
 //		Dados.saveToFile(dados);
-		
-		for(Encontrista e:dados.getEncontristas()) {
-			System.out.println(e.getCasal());
-		}
+
 		//
 		//
 		
