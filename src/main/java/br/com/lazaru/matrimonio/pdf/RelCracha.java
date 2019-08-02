@@ -3,6 +3,8 @@ package br.com.lazaru.matrimonio.pdf;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,9 @@ public class RelCracha {
 	//https://github.com/vandeseer/easytable/blob/master/src/test/java/org/vandeseer/integrationtest/ExcelLikeExampleTest.java
 		
 	public static void gerarCrachaEquipe(Dados dados, File diretorio) throws Exception {
-		BufferedImage bi = ImageIO.read(new File("src/main/resources/br/com/lazaru/matrimonio/sagradafam2.png"));
+		InputStream in = RelCracha.class.getResourceAsStream("sagradafam2.png");
+		
+		BufferedImage bi = ImageIO.read(in);
 		Image img = new Image(bi);
 		String outputFileName;
 
