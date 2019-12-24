@@ -5,14 +5,28 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "casal")
 @XmlType()
-public class Casal extends CasalBase implements Comparable<Casal> {
+public class Casal extends CasalBase {
 
 	private String homem;
+	private String nomeImpHomem;
+	private String nomeImpMulher;
 	private String mulher;
 	private String telefone;
 	private String atividade;
 	private String ativo;
+	private Integer ordem;
+	private boolean palestrante;
+	private boolean equipe;
+	private boolean imprimeCracha;
 
+	public Casal() {
+		ordem = Integer.MAX_VALUE;
+		nomeImpHomem = "";
+		nomeImpMulher = "";
+		palestrante = false;
+		equipe = false;
+	}
+	
 	public String getHomem() {
 		return homem;
 	}
@@ -56,11 +70,55 @@ public class Casal extends CasalBase implements Comparable<Casal> {
 		this.ativo = ativo;
 	}
 
-	public int compareTo(Casal e) {
-		if (getHomem() == null || e.getHomem() == null) {
-			return 0;
-		}
-		return getHomem().compareTo(e.getHomem());
+	
+	public Integer getOrdem() {
+		return ordem;
 	}
+
+	public void setOrdem(Integer ordem) {
+		this.ordem = ordem;
+	}
+
+	public String getNomeImpHomem() {
+		return nomeImpHomem;
+	}
+
+	public void setNomeImpHomem(String nomeImpHomem) {
+		this.nomeImpHomem = nomeImpHomem;
+	}
+
+	public String getNomeImpMulher() {
+		return nomeImpMulher;
+	}
+
+	public void setNomeImpMulher(String nomeImpMulher) {
+		this.nomeImpMulher = nomeImpMulher;
+	}
+
+	public boolean isPalestrante() {
+		return palestrante;
+	}
+
+	public void setPalestrante(boolean palestrante) {
+		this.palestrante = palestrante;
+	}
+
+	public boolean isEquipe() {
+		return equipe;
+	}
+
+	public void setEquipe(boolean equipe) {
+		this.equipe = equipe;
+	}
+
+	public void setImprimeCracha(boolean b) {
+		this.imprimeCracha = b;
+	}
+	
+	public boolean isImprimeCracha() {
+		return this.imprimeCracha;
+	}
+
+
 
 }

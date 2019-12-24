@@ -21,6 +21,12 @@
 			<version>1.5</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.github.vandeseer</groupId>
+			<artifactId>easytable</artifactId>
+			<version>0.5.0</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
@@ -79,16 +85,11 @@
 				<configuration>
 					<source>${maven.compiler.source}</source>
 					<target>${maven.compiler.source}</target>
-					<!-- 
-					<useIncrementalCompilation>false</useIncrementalCompilation>
-					<fork>true</fork>
-					<release>8</release>
-					 -->
+					<!-- <useIncrementalCompilation>false</useIncrementalCompilation> <fork>true</fork> 
+						<release>8</release> -->
 					<!-- <compilerArgs> <arg>-bootclasspath</arg> <arg>${sun.boot.class.path}${path.separator}${java.home}/lib/jfxrt.jar</arg> 
 						</compilerArgs> -->
-					<!-- 
-					<executable>/usr/lib/jvm/java-12-openjdk-amd64/bin/javac</executable>
-					 -->
+					<!-- <executable>/usr/lib/jvm/java-12-openjdk-amd64/bin/javac</executable> -->
 				</configuration>
 			</plugin>
 

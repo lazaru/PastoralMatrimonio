@@ -1,29 +1,21 @@
 package br.com.lazaru.matrimonio.pdf;
 
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import be.quodlibet.boxable.BaseTable;
 import be.quodlibet.boxable.Cell;
 import be.quodlibet.boxable.HorizontalAlignment;
 import be.quodlibet.boxable.Row;
 import be.quodlibet.boxable.VerticalAlignment;
-import be.quodlibet.boxable.image.Image;
 import be.quodlibet.boxable.line.LineStyle;
 import br.com.lazaru.matrimonio.bean.Encontrista;
-import br.com.lazaru.matrimonio.bean.Casal;
-import br.com.lazaru.matrimonio.bean.ICasal;
 
 public class RelEtiquetaPasta {
 
@@ -35,11 +27,6 @@ public class RelEtiquetaPasta {
 		} else {
 			outputFileName = diretorio.getPath().toString() + "\\Etiquetas.pdf";
 		}
-		// Create a new font object selecting one of the PDF base fonts
-		PDFont fontPlain = PDType1Font.HELVETICA;
-		PDFont fontBold = PDType1Font.HELVETICA_BOLD;
-		PDFont fontItalic = PDType1Font.HELVETICA_OBLIQUE;
-		PDFont fontMono = PDType1Font.COURIER;
 
 		// Create a document and add a page to it
 		PDDocument document = new PDDocument();
@@ -53,9 +40,9 @@ public class RelEtiquetaPasta {
 		PDPageContentStream cos = new PDPageContentStream(document, page);
 
 		// Dummy Table
-		float margin = 15;
+		float margin = 30;
 		// starting y position is whole page height subtracted by top and bottom margin
-		float yStartNewPage = page.getMediaBox().getHeight() - margin+10;
+		float yStartNewPage = page.getMediaBox().getHeight() - margin;
 		// we want table across whole page width (subtracted by left and right margin
 		// ofcourse)
 		float tableWidth = page.getMediaBox().getWidth() - (2 * margin);
@@ -67,8 +54,22 @@ public class RelEtiquetaPasta {
 
 		BaseTable table = new BaseTable(yPosition, yStartNewPage, bottomMargin, tableWidth, margin, document, page,
 				true, drawContent);		
+		int maior=0;
+		for(Encontrista e : casais) {
+			if(e.getHomem().length()>maior) {
+				maior = e.getHomem().length();
+			}
+			if(e.getMulher().length()>maior) {
+				maior = e.getMulher().length();
+			}
+		}
+		int tamFonte=30;
 		
-		
+		if(maior > 39) {
+			tamFonte = 24;
+		}else if(maior > 43) {
+			tamFonte = 19;
+		}
 
 		for(Encontrista e : casais) {
 			Row<PDPage> row = table.createRow(30);
@@ -78,7 +79,7 @@ public class RelEtiquetaPasta {
 			  .append("<p>").append("    Data de ").append(periodo).append("</p>");			
 			    
 			Cell<PDPage> cell = row.createCell(100, sb.toString());
-			cell.setFontSize(30);
+			cell.setFontSize(tamFonte);
 			cell.setLineSpacing(0.6f);
 			cell.setAlign(HorizontalAlignment.LEFT);
 			cell.setValign(VerticalAlignment.MIDDLE);

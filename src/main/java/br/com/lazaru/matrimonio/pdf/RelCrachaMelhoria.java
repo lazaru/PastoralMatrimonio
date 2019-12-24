@@ -3,7 +3,6 @@ package br.com.lazaru.matrimonio.pdf;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +23,6 @@ import be.quodlibet.boxable.image.Image;
 import be.quodlibet.boxable.line.LineStyle;
 import br.com.lazaru.matrimonio.bean.CasalBase;
 import br.com.lazaru.matrimonio.bean.Dados;
-import br.com.lazaru.matrimonio.bean.ICasal;
 
 public class RelCrachaMelhoria {
 	//https://github.com/vandeseer/easytable

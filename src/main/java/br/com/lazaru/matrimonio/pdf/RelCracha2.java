@@ -24,10 +24,10 @@ import be.quodlibet.boxable.line.LineStyle;
 import br.com.lazaru.matrimonio.bean.CasalBase;
 import br.com.lazaru.matrimonio.bean.Dados;
 
-public class RelCracha {
+public class RelCracha2 {
 
 	public static void gerarCrachaEquipe(Dados dados, File diretorio) throws Exception {
-		InputStream in = RelCracha.class.getResourceAsStream("sagradafam2.png");
+		InputStream in = RelCracha2.class.getResourceAsStream("sagradafam2.png");
 		
 		BufferedImage bi = ImageIO.read(in);
 		Image img = new Image(bi);
@@ -91,11 +91,17 @@ public class RelCracha {
 					//cellHtml.append("<br/><br/><br/>");
 				}
 
-				cellHtml.append("Equipe Sagrada Família<br/>");
-				cell = row.createCell(75, cellHtml.toString());
+//				cellHtml.append("Equipe Sagrada Família<br/>");
+//				cell = row.createCell(75, cellHtml.toString());
+//				cell.setAlign(HorizontalAlignment.CENTER);
+//				cell.setValign(VerticalAlignment.MIDDLE);
+//				cell.setFontSize(15);
+				
+
+				cell = row.createTableCell(75, "teste", document, page, startNewPageY, margin, margin);
 				cell.setAlign(HorizontalAlignment.CENTER);
-				cell.setValign(VerticalAlignment.MIDDLE);
-				cell.setFontSize(15);
+				cell.setValign(VerticalAlignment.MIDDLE);				
+				
 				table1.draw();
 			}
 

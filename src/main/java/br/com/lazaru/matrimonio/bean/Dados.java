@@ -11,6 +11,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import br.com.lazaru.matrimonio.ImportarDados;
+
 @XmlRootElement(name = "dados")
 public class Dados {
 
@@ -72,7 +74,10 @@ public class Dados {
 		try {
 			file = new File(System.getProperty("user.dir") + System.getProperty("file.separator") + "dados.xml");
 			if (!file.exists()) {
-				Dados config = new Dados();				
+				Dados config = new Dados();
+				//IMPORTA DADOS DA PLANILHA ON-LINE
+				ImportarDados.buscaEncontristas(config);
+				ImportarDados.buscaCasais(config);
 				Dados.saveToFile(config);
 			}
 			    
