@@ -10,15 +10,66 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.GeneralSecurityException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import java.net.URL;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
 
 import br.com.lazaru.matrimonio.bean.Casal;
 import br.com.lazaru.matrimonio.bean.Dados;
 import br.com.lazaru.matrimonio.bean.Encontrista;
 
 public class ImportarDados {
+	
+	private static class DefaultTrustManager implements X509TrustManager {
 
+        @Override
+        public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {}
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {}
+
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+            return null;
+        }
+    }
+	
+	private static InputStream getInputStream(String stringUrl) throws NoSuchAlgorithmException, KeyManagementException, IOException {
+		 // configure the SSLContext with a TrustManager
+        SSLContext ctx = SSLContext.getInstance("TLS");
+        ctx.init(new KeyManager[0], new TrustManager[] {new DefaultTrustManager()}, new SecureRandom());
+        SSLContext.setDefault(ctx);
+
+        URL url = new URL(stringUrl);
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setHostnameVerifier(new HostnameVerifier() {
+            @Override
+            public boolean verify(String arg0, SSLSession arg1) {
+                return true;
+            }
+        });
+        InputStream input = conn.getURL().openStream();
+        conn.disconnect();	
+        return input;
+	}
+	
 	public static void buscaEncontristas(Dados dados) {
 		getDadosEncontristas("https://docs.google.com/spreadsheets/d/e/2PACX-1vSGJ45Z2CiC3kUXcBQ8J92OiAjXqRDb74FXXbjzLGYx035OrQVfv3N6LFhCGcUhi5H_YtIBD1JXkF-4/pub?output=csv", dados);
 	}
@@ -29,27 +80,32 @@ public class ImportarDados {
 	
 	private static void getDadosEncontristas(String url, Dados dados) {
 		try {
-			InputStream in = new URL(url).openStream();
+			//InputStream in = new URL(url).openStream();
+			InputStream in = getInputStream(url);
 			Files.copy(in, Paths.get("./encontristas.csv"), StandardCopyOption.REPLACE_EXISTING);
 			importarEncontristasCvs(dados);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException|KeyManagementException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private static void getDadosCasasis(String url, Dados dados) {
 		try {
-			InputStream in = new URL(url).openStream();
+			//InputStream in = new URL(url).openStream();
+			InputStream in = getInputStream(url);
 			Files.copy(in, Paths.get("./casais.csv"), StandardCopyOption.REPLACE_EXISTING);
 			importarCasaisCvs(dados);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException|KeyManagementException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private static void importarEncontristasCvs(Dados dados) {
+		int idxEmail = 0,idxNomeNoivo = 0,idxNomeNoiva = 0,idxTelefoneNoivo = 0, idxTelefoneNoiva = 0,idxDataNascNoivo = 0,idxDataNascNoiva=0;
 		String arquivoCSV = "./encontristas.csv";
 		List<Encontrista> encontristas = new ArrayList<Encontrista>();
 	    BufferedReader br = null;
@@ -59,14 +115,32 @@ public class ImportarDados {
 	    	boolean pulaLinha = true;
 	        br = new BufferedReader(new FileReader(arquivoCSV));
 	        while ((linha = br.readLine()) != null) {
+	        	if(pulaLinha) {
+		        	//testa se e a linha cabeçalho da equipe
+		        	if(linha.contains("Nome completo do Noivo")&&linha.contains("Nome completo do Noiva")&&linha.contains("Email Address")) {
+		        		//esperado dentro de linha = Timestamp,Email Address,Nome completo do Noivo,Data de nascimento,Telefone,Religião,É batizado?,Fez a primeira Eucaristia?,Fez a Crisma,Possui alguma restrição alimentar por indicação médica?,Qual a restrição alimentar do noivo?,Nome completo do Noiva,Data de nascimento,Telefone,Religião,É batizado?,Fez a primeira Eucaristia?,Fez a Crisma,Possui alguma restrição alimentar por indicação médica?,Qual a restrição alimentar da noiva?,Data do casamento,Paróquia / Cidade
+		        		String[] colunasImportadas = linha.split(",");
+		        		List<String> colunas = Arrays.asList(colunasImportadas);
+		        		idxEmail = colunas.indexOf("Email Address");
+		        		idxNomeNoivo = colunas.indexOf("Nome completo do Noivo");
+		        		idxNomeNoiva = colunas.indexOf("Nome completo do Noiva");
+		        		idxTelefoneNoivo = colunas.indexOf("Telefone");
+		        		idxTelefoneNoiva = colunas.lastIndexOf("Telefone");
+		        		idxDataNascNoivo = colunas.indexOf("Data de nascimento");
+		        		idxDataNascNoiva = colunas.lastIndexOf("Data de nascimento");
+		        	}
+	        	}
 				if (!pulaLinha) {
 					String[] noivos = linha.split(csvDivisor);
 					Encontrista e = new Encontrista();
 					//se mudar a posicao da coluna na planilha tem que alterar estas linhas
-					e.setHomem(noivos[1]);
-					e.setMulher(noivos[13]);
-					e.setTelefoneHomem(noivos[3]);
-					e.setTelefoneMulher(noivos[15]);
+					e.setHomem(noivos[idxNomeNoivo]);
+					e.setMulher(noivos[idxNomeNoiva]);
+					e.setTelefoneHomem(noivos[idxTelefoneNoivo]);
+					e.setTelefoneMulher(noivos[idxTelefoneNoiva]);
+					e.setEmail(noivos[idxEmail]);
+					e.setDataNascHomem(noivos[idxDataNascNoivo]);
+					e.setDataNascMulher(noivos[idxDataNascNoiva]);
 					encontristas.add(e);
 					System.out.println("Noivos [" + e.getHomem() + " e " + e.getMulher() + "]");
 				}
@@ -94,6 +168,7 @@ public class ImportarDados {
 	}
 	
 	private static void importarCasaisCvs(Dados dados) {
+		int idxHomem=0, idxNomeImpHomem=0, idxMulher=0, idxNomeImpMulher=0, idxAtivo=0, idxPalestrante=0, idxImpCracha=0, idxAtividade=0, idxTelefone=0, idxOrdemPalestra=0, idxEquipe=0;
 		String arquivoCSV = "./casais.csv";
 		List<Casal> casais = new ArrayList<Casal>();
 	    BufferedReader br = null;
@@ -108,6 +183,26 @@ public class ImportarDados {
 	        	if (contLinha == 1 || (contLinha >2 && contLinha<=4)) {
 	        		pulaLinha = true;
 	        	}
+	        	//testa se e a linha cabeçalho da equipe
+	        	if(linha.contains("nomeImpHomem")&&linha.contains("nomeImpMulher")&&linha.contains("Imprime Crachá")) {
+	        		//esperado dentro de linha = homem,nomeImpHomem,mulher,nomeImpMulher,Ativo,palestrante,equipe,Imprime Crachá,atividade,telefone,OrdemPalestra
+	        		String[] colunasImportadas = linha.split(",");
+	        		List<String> colunas = Arrays.asList(colunasImportadas);
+	        		idxHomem = colunas.indexOf("homem");
+	        		idxNomeImpHomem = colunas.indexOf("nomeImpHomem");
+	        		idxMulher = colunas.indexOf("mulher");
+	        		idxNomeImpMulher = colunas.indexOf("nomeImpMulher");
+	        		idxAtivo = colunas.indexOf("Ativo");
+	        		idxPalestrante = colunas.indexOf("palestrante");
+	        		idxImpCracha = colunas.indexOf("Imprime Crachá");
+	        		idxAtividade = colunas.indexOf("atividade");
+	        		idxTelefone = colunas.indexOf("telefone");
+	        		idxOrdemPalestra = colunas.indexOf("OrdemPalestra");
+	        		idxEquipe = colunas.indexOf("equipe");
+	        		
+	        	}
+	        	
+	        	
 				if (!pulaLinha) {
 					String[] strLinha = linha.split(csvDivisor);
 					if(contLinha == 2) {
@@ -116,20 +211,20 @@ public class ImportarDados {
 						System.out.println("Data"+data);
 					}else if(contLinha >= 5) {
 						Casal e = new Casal();
-						if(!strLinha[4].isEmpty() && strLinha[4].startsWith("S")) {
+						if(!strLinha[idxAtivo].isEmpty() && strLinha[idxAtivo].startsWith("S")) {
 							//	se mudar a posicao da coluna na planilha tem que alterar estas linhas
-							e.setHomem(strLinha[0]);
-							e.setNomeImpHomem(strLinha[1]);
-							e.setMulher(strLinha[2]);						
-							e.setNomeImpMulher(strLinha[3]);
-							e.setAtivo(strLinha[4]);
-							e.setImprimeCracha((!strLinha[7].isEmpty() && strLinha[7].startsWith("S")));
-							e.setAtividade(strLinha[8]);
-							e.setEquipe((!strLinha[6].isEmpty() && strLinha[6].startsWith("S")));
+							e.setHomem(strLinha[idxHomem]);
+							e.setNomeImpHomem(strLinha[idxNomeImpHomem]);
+							e.setMulher(strLinha[idxMulher]);						
+							e.setNomeImpMulher(strLinha[idxNomeImpMulher]);
+							e.setAtivo(strLinha[idxAtivo]);
+							e.setImprimeCracha((!strLinha[idxImpCracha].isEmpty() && strLinha[idxImpCracha].startsWith("S")));
+							e.setAtividade(strLinha[idxAtividade]);
+							e.setEquipe((!strLinha[idxEquipe].isEmpty() && strLinha[idxEquipe].startsWith("S")));
 							if(e.getAtividade().isEmpty() && e.isEquipe()) {
 								e.setAtividade("Apoio");	
 							}
-							e.setTelefone(strLinha[9]);
+							e.setTelefone(strLinha[idxTelefone]);
 							
 							if((strLinha.length==11)&&!strLinha[10].isEmpty()) {
 								try {
@@ -165,5 +260,9 @@ public class ImportarDados {
 	        }
 	        
 	    }
+	}
+	
+	public static void removeElement(Object[] arr, int removedIdx) {
+	    System.arraycopy(arr, removedIdx + 1, arr, removedIdx, arr.length - 1 - removedIdx);
 	}
 }

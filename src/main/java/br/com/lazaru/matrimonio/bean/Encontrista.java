@@ -13,6 +13,9 @@ public class Encontrista extends CasalBase {
 	private String nomeImpMulher;
 	private String telefoneHomem;
 	private String telefoneMulher;
+	private String email;
+	private String dataNascHomem;
+	private String dataNascMulher;
 	private Integer ordem;
 
 	public Encontrista() {
@@ -71,6 +74,24 @@ public class Encontrista extends CasalBase {
 	}
 	public void setNomeImpMulher(String nomeImpMulher) {
 		this.nomeImpMulher = padronizaNome(nomeImpMulher);
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getDataNascHomem() {
+		return dataNascHomem;
+	}
+	public void setDataNascHomem(String dataNascHomem) {
+		this.dataNascHomem = dataNascHomem;
+	}
+	public String getDataNascMulher() {
+		return dataNascMulher;
+	}
+	public void setDataNascMulher(String dataNascMulher) {
+		this.dataNascMulher = dataNascMulher;
 	}
 
 }

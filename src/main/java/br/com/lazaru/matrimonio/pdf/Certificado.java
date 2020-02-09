@@ -28,30 +28,36 @@ public class Certificado {
     }
     
     private static String getMes(String mes) {
-    	switch (mes) {
-		case "1":
+    	int imes = 20;
+    	try {
+    		imes = Integer.valueOf(mes);
+    	}catch (Exception e) {			
+		}
+    	
+    	switch (imes) {
+		case 1:
 			return "Janeiro";
-		case "2":
+		case 2:
 			return "Fevereiro";
-		case "3":
+		case 3:
 			return "Março";
-		case "4":
+		case 4:
 			return "Abril";
-		case "5":
+		case 5:
 			return "Maio";
-		case "6":
+		case 6:
 			return "Junho";
-		case "7":
+		case 7:
 			return "Julho";	
-		case "8":
+		case 8:
 			return "Agosto";
-		case "9":
+		case 9:
 			return "Setembro";
-		case "10":
+		case 10:
 			return "Outubro";
-		case "11":
+		case 11:
 			return "Novembro";
-		case "12":
+		case 12:
 			return "Dezembro";	
 		default:
 			return"";

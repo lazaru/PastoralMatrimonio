@@ -87,6 +87,7 @@ public class Dados {
 			return wrapper;
 
 		} catch (Exception e) { // catches ANY exception
+			e.printStackTrace();
 			return null;
 		}
 

@@ -17,6 +17,7 @@ import static org.vandeseer.easytable.settings.VerticalAlignment.MIDDLE;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,6 +37,7 @@ import org.vandeseer.easytable.structure.Table.TableBuilder;
 import org.vandeseer.easytable.structure.cell.ImageCell;
 import org.vandeseer.easytable.structure.cell.TextCell;
 
+import br.com.lazaru.matrimonio.ImportarDados;
 import br.com.lazaru.matrimonio.bean.CasalBase;
 import br.com.lazaru.matrimonio.bean.Dados;
 
@@ -140,23 +142,36 @@ public class RelCrachaNovo {
         	}else {
         		String umApenas = ((homem!=null&&!homem.isEmpty())?homem:mulher);
         		String[] test = umApenas.split("\\s+");
-        		tableBuilder.addRow(Row.builder()
-        				.add(TextCell.builder().borderWidth(1).text(test[0]).fontSize(30).horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build())
-        				
-        				.add(TextCell.builder().borderWidth(1).text("").horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build())
-        				.build());
+        		if(test[0].length() < 3) {
+    				//caso seja P. Marcio por exemplo entra aqui.
+        			test[0] += " "+test[1];
+        			String[] arr = { test[0] };
+        			test = arr;
+    			}
+    			
+        		RowBuilder row1 = Row.builder();
+        		RowBuilder row2 = Row.builder();
+        		RowBuilder row3 = Row.builder();
         		
-        	tableBuilder.addRow(Row.builder()
-    				.add(TextCell.builder().borderWidth(1).text(" ").horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build())
-    				
-    				.add(TextCell.builder().borderWidth(1).text(" ").horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build())
-    				.build() );
+        		if(test.length == 2) {
+        			row1.add(TextCell.builder().borderWidth(1).text(test[0]).fontSize(30).horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build());
+        			row2.add(TextCell.builder().borderWidth(1).text(" ").horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build());
+        			row3.add(TextCell.builder().borderWidth(1).text(test[1]).fontSize(30).horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build());
+        		}else if( test.length == 1) {
+        			row1.add(TextCell.builder().borderWidth(1).text(" ").horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build());
+        			row2.add(TextCell.builder().borderWidth(1).text(test[0]).fontSize(30).horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build());
+        			row3.add(TextCell.builder().borderWidth(1).text(" ").horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build());
+        		}
+        		row1.add(TextCell.builder().borderWidth(1).text("").horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build());
+				row2.add(TextCell.builder().borderWidth(1).text(" ").horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build());
+				row3.add(TextCell.builder().borderWidth(1).text("").horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build());
+        		tableBuilder.addRow( row1.build());
+        		
+        		tableBuilder.addRow( row2.build() );
         	
-        	tableBuilder.addRow(Row.builder()
-    				.add(TextCell.builder().borderWidth(1).text(test[1]).fontSize(30).horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build())
+        		tableBuilder.addRow( row3.build() );
     				
-    				.add(TextCell.builder().borderWidth(1).text("").horizontalAlignment(CENTER).borderWidth(0).borderWidthRight(1).build())
-    				.build() );
+    				
         		
 
         	}

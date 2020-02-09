@@ -43,11 +43,29 @@ public abstract class CasalBase implements Comparable<CasalBase> {
 			return getNomeImpMulher();
 		}
 	}
-
+	
+	private String getNomePadrao(String name) {
+		if (name != null && !name.isEmpty()) {
+			String[] parts = name.split("\\s+");
+			String primeiro = parts[0];//nao vou alterar ficara como foi digitado
+			//aqui e para tirar nomes com 2 digitos ex: de, e, da, p.
+			if(primeiro.length() > 2 ) {
+				primeiro = parts[0].toUpperCase().substring(0,1) + parts[0].toLowerCase().substring(1);
+			}
+			return primeiro;
+		}
+		return "";
+		
+	}
 	private String getFirstName(String name) {
 		if (name != null && !name.isEmpty()) {
 			String[] parts = name.split("\\s+");
-			return parts[0].toUpperCase().substring(0,1) + parts[0].toLowerCase().substring(1);
+			String primeiro = parts[0].toUpperCase().substring(0,1) + parts[0].toLowerCase().substring(1);
+			if(primeiro.length() < 3) {
+				//caso seja P. Marcio por exemplo entra aqui.
+				primeiro += " "+parts[1];
+			}
+			return primeiro;
 		}
 		return "";
 	}
@@ -65,7 +83,7 @@ public abstract class CasalBase implements Comparable<CasalBase> {
 				if(!sb.toString().isEmpty()) {
 					sb.append(" ");
 				}
-				sb.append( getFirstName(s) );
+				sb.append( getNomePadrao(s) );
 			}
 		}
 		return sb.toString();
